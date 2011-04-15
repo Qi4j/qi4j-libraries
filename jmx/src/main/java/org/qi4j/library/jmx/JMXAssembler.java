@@ -14,10 +14,11 @@
 
 package org.qi4j.library.jmx;
 
-import javax.management.MBeanServer;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+
+import javax.management.MBeanServer;
 
 /**
  * Register JMX helpers in a module.
@@ -28,8 +29,9 @@ public class JMXAssembler
     public void assemble( ModuleAssembly module )
         throws AssemblyException
     {
-        module.importServices( MBeanServer.class ).importedBy( MBeanServerImporter.class );
-        module.addServices( ConfigurationManagerService.class ).instantiateOnStartup();
+        module.importedServices( MBeanServer.class ).importedBy( MBeanServerImporter.class );
+        module.services( ApplicationManagerService.class ).instantiateOnStartup();
+        module.services( ConfigurationManagerService.class ).instantiateOnStartup();
 
     }
 }
