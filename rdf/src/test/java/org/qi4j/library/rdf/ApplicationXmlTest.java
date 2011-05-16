@@ -36,9 +36,9 @@ import org.qi4j.api.sideeffect.SideEffects;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.LayerAssembly;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.library.fileconfig.FileConfiguration;
 import org.qi4j.library.rdf.model.ApplicationSerializer;
-import org.qi4j.test.AbstractQi4jTest;
 
 /**
  * JAVADOC

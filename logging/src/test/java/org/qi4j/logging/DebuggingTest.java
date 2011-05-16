@@ -40,7 +40,7 @@ import org.qi4j.logging.debug.service.DebuggingServiceComposite;
 import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entitystore.EntityStore;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
-import org.qi4j.test.AbstractQi4jTest;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 
 import static org.junit.Assert.*;
 

@@ -21,7 +21,7 @@ import org.qi4j.api.composite.TransientBuilder;
 import org.qi4j.api.constraint.ConstraintViolationException;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.test.AbstractQi4jTest;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 
 public class ConstraintTest extends AbstractQi4jTest
 {

@@ -25,6 +25,7 @@ import org.qi4j.library.rdf.Rdfs;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entity.association.AssociationType;
 import org.qi4j.spi.entity.association.ManyAssociationType;
+import org.qi4j.spi.entity.association.NamedAssociationType;
 import org.qi4j.spi.property.PropertyType;
 
 /**
@@ -46,6 +47,7 @@ public class EntityTypeParser
         Set<PropertyType> properties = new HashSet<PropertyType>();
         Set<AssociationType> associations = new HashSet<AssociationType>();
         Set<ManyAssociationType> manyAssociations = new HashSet<ManyAssociationType>();
+        Set<NamedAssociationType> namedAssociations = new HashSet<NamedAssociationType>();
 
         for( Statement statement : entityTypeGraph )
         {
@@ -105,7 +107,7 @@ public class EntityTypeParser
 */
         }
 
-        EntityType entityType = new EntityType(type, queryable, mixinTypes, properties, associations, manyAssociations);
+        EntityType entityType = new EntityType(type, queryable, mixinTypes, properties, associations, manyAssociations, namedAssociations);
         return entityType;
     }
 }

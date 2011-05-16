@@ -43,7 +43,7 @@ import org.qi4j.library.eventsourcing.domain.factory.DomainEventFactoryService;
 import org.qi4j.library.eventsourcing.domain.source.EventSource;
 import org.qi4j.library.eventsourcing.domain.source.EventStream;
 import org.qi4j.library.eventsourcing.domain.source.memory.MemoryEventStoreService;
-import org.qi4j.test.AbstractQi4jTest;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.test.EntityTestAssembler;
 
 import java.io.IOException;

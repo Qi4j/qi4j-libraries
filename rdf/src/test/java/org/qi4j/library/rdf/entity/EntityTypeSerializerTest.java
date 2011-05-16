@@ -27,6 +27,7 @@ import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.api.value.ValueBuilder;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.library.rdf.DcRdf;
 import org.qi4j.library.rdf.Qi4jEntityType;
@@ -35,8 +36,6 @@ import org.qi4j.library.rdf.serializer.RdfXmlSerializer;
 import org.qi4j.spi.entity.EntityDescriptor;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entitystore.EntityStore;
-import org.qi4j.test.AbstractQi4jTest;
-
 
 /**
  * JAVADOC

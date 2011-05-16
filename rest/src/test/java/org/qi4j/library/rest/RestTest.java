@@ -47,7 +47,7 @@ import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.index.rdf.assembly.RdfMemoryStoreAssembler;
 import org.qi4j.spi.structure.ApplicationModelSPI;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
-import org.qi4j.test.AbstractQi4jTest;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;

@@ -28,10 +28,10 @@ import org.qi4j.api.service.ServiceReference;
 import org.qi4j.bootstrap.ApplicationName;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import static org.qi4j.library.http.Dispatchers.Dispatcher.*;
 import static org.qi4j.library.http.Servlets.*;
-import org.qi4j.test.AbstractQi4jTest;
 
 public final class JettyServiceTest extends AbstractQi4jTest
 {
