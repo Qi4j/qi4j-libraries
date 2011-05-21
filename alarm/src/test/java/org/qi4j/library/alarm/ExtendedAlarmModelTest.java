@@ -29,9 +29,9 @@ import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.value.ValueBuilder;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
-import org.qi4j.core.testsupport.AbstractQi4jTest;
 
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -52,8 +52,9 @@ public class ExtendedAlarmModelTest
         module.services( MemoryEntityStoreService.class );
         module.services( UuidIdentityGeneratorService.class );
         module.entities( AlarmEntity.class );
-        module.forMixin( AlarmHistory.class ).declareDefaults().maxSize().set(10);
+        module.forMixin( AlarmHistory.class ).declareDefaults().maxSize().set( 10 );
         module.values( AlarmEvent.class );
+        module.values( AlarmCategory.class );
         module.values( AlarmStatus.class );
     }
 
@@ -77,7 +78,9 @@ public class ExtendedAlarmModelTest
     {
         UnitOfWork uow = unitOfWorkFactory.currentUnitOfWork();
         if( uow != null )
+        {
             uow.discard();
+        }
         super.tearDown();
     }
 
@@ -943,10 +946,18 @@ public class ExtendedAlarmModelTest
     {
         UnitOfWork uow = unitOfWorkFactory.currentUnitOfWork();
         EntityBuilder<Alarm> builder = uow.newEntityBuilder( Alarm.class );
+        builder.instance().category().set( createCategory( "Testing" ) );
         Alarm.AlarmState state = builder.instanceFor( Alarm.AlarmState.class );
         state.currentStatus().set( createStatus( Alarm.STATUS_NORMAL ) );
         state.description().set( "Test Description" );
         state.systemName().set( name );
+        return builder.newInstance();
+    }
+
+    private AlarmCategory createCategory( String name )
+    {
+        ValueBuilder<AlarmCategory> builder = valueBuilderFactory.newValueBuilder( AlarmCategory.class );
+        builder.prototype().name().set( name );
         return builder.newInstance();
     }
 
