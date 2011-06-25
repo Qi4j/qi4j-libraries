@@ -45,6 +45,7 @@ public class EntityTypeParser
         Set<PropertyType> properties = new HashSet<PropertyType>();
         Set<AssociationType> associations = new HashSet<AssociationType>();
         Set<AssociationType> manyAssociations = new HashSet<AssociationType>();
+        Set<AssociationType> namedAssociations = new HashSet<AssociationType>();
 
         for( Statement statement : entityTypeGraph )
         {
@@ -104,7 +105,7 @@ public class EntityTypeParser
 */
         }
 
-        EntityType entityType = new EntityType(type, queryable, mixinTypes, properties, associations, manyAssociations);
+        EntityType entityType = new EntityType(type, queryable, mixinTypes, properties, associations, manyAssociations, namedAssociations);
         return entityType;
     }
 }
