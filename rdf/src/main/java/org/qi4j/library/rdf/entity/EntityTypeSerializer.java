@@ -30,7 +30,6 @@ import org.qi4j.library.rdf.Qi4jEntityType;
 import org.qi4j.library.rdf.Rdfs;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entity.association.AssociationType;
-import org.qi4j.spi.entity.association.ManyAssociationType;
 import org.qi4j.spi.property.PropertyType;
 
 /**
@@ -98,7 +97,7 @@ public class EntityTypeSerializer
     {
         ValueFactory values = graph.getValueFactory();
         // ManyAssociations
-        for( ManyAssociationType manyAssociationType : entityType.manyAssociations() )
+        for( AssociationType manyAssociationType : entityType.manyAssociations() )
         {
             URI associationURI = values.createURI( manyAssociationType.qualifiedName().toURI() );
             graph.add( associationURI, Rdfs.DOMAIN, entityTypeUri );

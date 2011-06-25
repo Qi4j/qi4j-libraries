@@ -31,7 +31,6 @@ import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entity.ManyAssociationState;
 import org.qi4j.spi.entity.association.AssociationType;
-import org.qi4j.spi.entity.association.ManyAssociationType;
 import org.qi4j.spi.property.PropertyType;
 
 /**
@@ -130,7 +129,7 @@ public class EntityStateParser
             }
         }
 
-        for( ManyAssociationType manyAssociationType : entityType.manyAssociations() )
+        for( AssociationType manyAssociationType : entityType.manyAssociations() )
         {
             Collection<EntityReference> entities = manyAssociationValues.get( manyAssociationResources.get( manyAssociationType.qualifiedName().toURI() ) );
             if( entities != null )

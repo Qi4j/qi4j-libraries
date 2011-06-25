@@ -37,7 +37,6 @@ import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entity.ManyAssociationState;
 import org.qi4j.spi.entity.association.AssociationType;
-import org.qi4j.spi.entity.association.ManyAssociationType;
 import org.qi4j.spi.entitystore.*;
 import org.qi4j.spi.entitystore.helpers.JSONEntityState;
 import org.qi4j.spi.property.PropertyType;
@@ -266,7 +265,7 @@ public class EntityResource
                 out.println( "</table></fieldset>\n" );
 
                 out.println( "<fieldset><legend>Many manyAssociations</legend>\n<table>" );
-                for (ManyAssociationType associationType : type.manyAssociations())
+                for (AssociationType associationType : type.manyAssociations())
                 {
                     ManyAssociationState identities = entity.getManyAssociation( associationType.qualifiedName() );
                     String value = "";
@@ -418,7 +417,7 @@ public class EntityResource
                     entity.setAssociation( associationType.qualifiedName(), EntityReference.parseEntityReference( newStringAssociation ) );
                 }
             }
-            for (ManyAssociationType associationType : type.manyAssociations())
+            for (AssociationType associationType : type.manyAssociations())
             {
                 String newStringAssociation = form.getFirstValue( associationType.qualifiedName().toString() );
                 ManyAssociationState manyAssociation = entity.getManyAssociation( associationType.qualifiedName() );
