@@ -4,3 +4,7 @@ out/
 rdf/application.rdfn3
 rdf/application.rdfxml
 sql/derby.log
+.classpath
+.project
+.settings
+nb-configuration.xml
