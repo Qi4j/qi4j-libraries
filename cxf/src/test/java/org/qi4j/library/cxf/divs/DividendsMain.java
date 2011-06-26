@@ -24,8 +24,12 @@ import org.qi4j.bootstrap.SingletonAssembler;
 import org.qi4j.library.cxf.CxfAssembler;
 import org.qi4j.spi.structure.ApplicationSPI;
 
-public class DividendsMain
+public final class DividendsMain
 {
+    private DividendsMain()
+    {
+    }
+
     public static void main( String[] args )
         throws Exception
     {
@@ -56,6 +60,6 @@ public class DividendsMain
                     e.printStackTrace();
                 }
             }
-        });
+        } );
     }
 }
