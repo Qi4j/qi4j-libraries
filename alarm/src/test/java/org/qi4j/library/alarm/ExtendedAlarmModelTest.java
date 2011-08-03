@@ -43,6 +43,7 @@ public class ExtendedAlarmModelTest
     extends AbstractQi4jTest
 {
 
+    @SuppressWarnings( { "unchecked" } )
     @Override
     public void assemble( ModuleAssembly module )
         throws AssemblyException
@@ -89,31 +90,31 @@ public class ExtendedAlarmModelTest
         throws Exception
     {
         AlarmModel provider = (AlarmModel) serviceLocator.findService( AlarmModel.class ).get();
-        boolean test1 = provider.modelDescription().toLowerCase().indexOf( "normal" ) >= 0;
-        boolean test2 = provider.modelDescription().toLowerCase().indexOf( "activated" ) >= 0;
-        boolean test3 = provider.modelDescription().toLowerCase().indexOf( "deactivated" ) >= 0;
-        boolean test4 = provider.modelDescription().toLowerCase().indexOf( "acknowledged" ) >= 0;
-        boolean test5 = provider.modelDescription().toLowerCase().indexOf( "activation" ) >= 0;
-        boolean test6 = provider.modelDescription().toLowerCase().indexOf( "deactivation" ) >= 0;
-        boolean test7 = provider.modelDescription().toLowerCase().indexOf( "acknowledge" ) >= 0;
-        boolean test8 = provider.modelDescription().toLowerCase().indexOf( "block" ) >= 0;
-        boolean test9 = provider.modelDescription().toLowerCase().indexOf( "unblock" ) >= 0;
-        boolean test10 = provider.modelDescription().toLowerCase().indexOf( "disable" ) >= 0;
-        boolean test11 = provider.modelDescription().toLowerCase().indexOf( "enable" ) >= 0;
+        boolean test1 = provider.modelDescription().toLowerCase().contains( "normal" );
+        boolean test2 = provider.modelDescription().toLowerCase().contains( "activated" );
+        boolean test3 = provider.modelDescription().toLowerCase().contains( "deactivated" );
+        boolean test4 = provider.modelDescription().toLowerCase().contains( "acknowledged" );
+        boolean test5 = provider.modelDescription().toLowerCase().contains( "activation" );
+        boolean test6 = provider.modelDescription().toLowerCase().contains( "deactivation" );
+        boolean test7 = provider.modelDescription().toLowerCase().contains( "acknowledge" );
+        boolean test8 = provider.modelDescription().toLowerCase().contains( "block" );
+        boolean test9 = provider.modelDescription().toLowerCase().contains( "unblock" );
+        boolean test10 = provider.modelDescription().toLowerCase().contains( "disable" );
+        boolean test11 = provider.modelDescription().toLowerCase().contains( "enable" );
         assertTrue( test1 && test2 && test3 && test4 && test5 && test6 && test7 && test8 && test9 && test10 && test11 );
 
         Locale english = new Locale( "en" );
-        test1 = provider.modelDescription( english ).toLowerCase().indexOf( "normal" ) >= 0;
-        test2 = provider.modelDescription( english ).toLowerCase().indexOf( "activated" ) >= 0;
-        test3 = provider.modelDescription( english ).toLowerCase().indexOf( "deactivated" ) >= 0;
-        test4 = provider.modelDescription( english ).toLowerCase().indexOf( "acknowledged" ) >= 0;
-        test5 = provider.modelDescription( english ).toLowerCase().indexOf( "activation" ) >= 0;
-        test6 = provider.modelDescription( english ).toLowerCase().indexOf( "deactivation" ) >= 0;
-        test7 = provider.modelDescription( english ).toLowerCase().indexOf( "acknowledge" ) >= 0;
-        test8 = provider.modelDescription( english ).toLowerCase().indexOf( "block" ) >= 0;
-        test9 = provider.modelDescription( english ).toLowerCase().indexOf( "unblock" ) >= 0;
-        test10 = provider.modelDescription( english ).toLowerCase().indexOf( "disable" ) >= 0;
-        test11 = provider.modelDescription( english ).toLowerCase().indexOf( "enable" ) >= 0;
+        test1 = provider.modelDescription( english ).toLowerCase().contains( "normal" );
+        test2 = provider.modelDescription( english ).toLowerCase().contains( "activated" );
+        test3 = provider.modelDescription( english ).toLowerCase().contains( "deactivated" );
+        test4 = provider.modelDescription( english ).toLowerCase().contains( "acknowledged" );
+        test5 = provider.modelDescription( english ).toLowerCase().contains( "activation" );
+        test6 = provider.modelDescription( english ).toLowerCase().contains( "deactivation" );
+        test7 = provider.modelDescription( english ).toLowerCase().contains( "acknowledge" );
+        test8 = provider.modelDescription( english ).toLowerCase().contains( "block" );
+        test9 = provider.modelDescription( english ).toLowerCase().contains( "unblock" );
+        test10 = provider.modelDescription( english ).toLowerCase().contains( "disable" );
+        test11 = provider.modelDescription( english ).toLowerCase().contains( "enable" );
         assertTrue( test1 && test2 && test3 && test4 && test5 && test6 && test7 && test8 && test9 && test10 && test11 );
     }
 
