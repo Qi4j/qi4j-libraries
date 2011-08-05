@@ -21,6 +21,7 @@
  */
 package org.qi4j.library.shiro;
 
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.library.shiro.tests.SecuredService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -33,7 +34,6 @@ import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.library.shiro.tests.username.UsernameFixtures;
 import org.qi4j.library.shiro.tests.username.UsernameTestAssembler;
-import org.qi4j.test.AbstractQi4jTest;
 
 /**
  * A unit test showing how to use Shiro in Qi4j Applications with Username & Password credentials.

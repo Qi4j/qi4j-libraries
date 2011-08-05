@@ -18,6 +18,12 @@
 
 package org.qi4j.library.cxf;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.Map;
+import javax.xml.namespace.QName;
 import org.apache.cxf.aegis.Context;
 import org.apache.cxf.aegis.DatabindingException;
 import org.apache.cxf.aegis.type.AegisType;
@@ -27,7 +33,11 @@ import org.apache.cxf.aegis.type.collection.MapType;
 import org.apache.cxf.aegis.xml.MessageReader;
 import org.apache.cxf.aegis.xml.MessageWriter;
 import org.apache.cxf.common.xmlschema.XmlSchemaUtils;
-import org.apache.ws.commons.schema.*;
+import org.apache.ws.commons.schema.XmlSchema;
+import org.apache.ws.commons.schema.XmlSchemaAttribute;
+import org.apache.ws.commons.schema.XmlSchemaComplexType;
+import org.apache.ws.commons.schema.XmlSchemaElement;
+import org.apache.ws.commons.schema.XmlSchemaSequence;
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.common.QualifiedName;
 import org.qi4j.api.common.TypeName;
@@ -46,13 +56,6 @@ import org.qi4j.spi.composite.StateDescriptor;
 import org.qi4j.spi.property.PropertyDescriptor;
 import org.qi4j.spi.structure.ModuleSPI;
 import org.qi4j.spi.value.ValueDescriptor;
-
-import javax.xml.namespace.QName;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.Map;
 
 public class ValueCompositeCxfType extends AegisType
 {
@@ -147,10 +150,10 @@ public class ValueCompositeCxfType extends AegisType
                 {
                     type.writeObject( value, cwriter, context );
                 }
-                else
-                {
+//                else
+//                {
 //                    cwriter.writeXsiNil();
-                }
+//                }
                 cwriter.close();
             }
         } );
@@ -158,7 +161,8 @@ public class ValueCompositeCxfType extends AegisType
 
     private AegisType getOrCreateNonQi4jType( Object value )
     {
-        AegisType type;TypeMapping mapping = getTypeMapping();
+        AegisType type;
+        TypeMapping mapping = getTypeMapping();
         Class<?> javaType = value.getClass();
         type = mapping.getType( javaType );
         if( type == null )
@@ -174,9 +178,8 @@ public class ValueCompositeCxfType extends AegisType
     @Override
     public void writeSchema( XmlSchema root )
     {
-        XmlSchemaComplexType complex = new XmlSchemaComplexType( root );
+        XmlSchemaComplexType complex = new XmlSchemaComplexType( root, true );
         complex.setName( getSchemaType().getLocalPart() );
-        root.addType( complex );
         root.getItems().add( complex );
 
         XmlSchemaSequence sequence = new XmlSchemaSequence(); // No clue why this?
@@ -188,25 +191,26 @@ public class ValueCompositeCxfType extends AegisType
         {
             if( isValueComposite( p.type() ) )
             {
-                XmlSchemaElement element = new XmlSchemaElement();
+                XmlSchemaElement element = new XmlSchemaElement( root, false );
                 element.setName( p.qualifiedName().name() );
                 element.setNillable( p.metaInfo( Optional.class ) != null ); // see below
                 sequence.getItems().add( element );
                 AegisType nested = getOrCreateAegisType( p.type(), root );
-                element.setRefName( nested.getSchemaType() );
+                QName schemaTypeName = nested.getSchemaType();
+                element.setSchemaTypeName( schemaTypeName );
             }
             else if( isCollectionOrMap( p ) )
             {
-                XmlSchemaElement element = new XmlSchemaElement();
+                XmlSchemaElement element = new XmlSchemaElement( root, false );
                 element.setName( p.qualifiedName().name() );
                 element.setNillable( p.metaInfo( Optional.class ) != null ); // see below
                 sequence.getItems().add( element );
                 AegisType nested = getOrCreateAegisType( p.type(), root );
-                element.setRefName( nested.getSchemaType() );
+                element.setSchemaTypeName( nested.getSchemaType() );
             }
             else
             {
-                XmlSchemaAttribute attribute = new XmlSchemaAttribute();
+                XmlSchemaAttribute attribute = new XmlSchemaAttribute( root, false );
                 complex.getAttributes().add( attribute );
                 attribute.setName( p.qualifiedName().name() );
                 AegisType nested = getTypeMapping().getType( p.type() );

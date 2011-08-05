@@ -25,7 +25,7 @@ import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.library.circuitbreaker.service.AbstractBreakOnThrowable;
 import org.qi4j.library.circuitbreaker.service.BreaksCircuitOnThrowable;
 import org.qi4j.library.circuitbreaker.service.ServiceCircuitBreaker;
-import org.qi4j.test.AbstractQi4jTest;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 
 import java.beans.PropertyVetoException;
 

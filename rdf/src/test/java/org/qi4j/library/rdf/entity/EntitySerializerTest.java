@@ -35,7 +35,7 @@ import org.qi4j.library.rdf.Rdfs;
 import org.qi4j.library.rdf.serializer.RdfXmlSerializer;
 import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entitystore.EntityStore;
-import org.qi4j.test.AbstractQi4jTest;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 
 /**
  * JAVADOC
@@ -68,7 +68,7 @@ public class EntitySerializerTest
     public void testEntitySerializer() throws RDFHandlerException
     {
         EntityReference entityReference = new EntityReference( "test2" );
-        EntityState entityState = entityStore.newUnitOfWork( UsecaseBuilder.newUsecase( "Test" ), moduleInstance ).getEntityState( entityReference );
+        EntityState entityState = entityStore.newUnitOfWork( UsecaseBuilder.newUsecase( "Test" ), moduleInstance, System.currentTimeMillis() ).getEntityState( entityReference );
 
         Iterable<Statement> graph = serializer.serialize( entityState );
 

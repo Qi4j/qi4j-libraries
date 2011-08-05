@@ -27,6 +27,7 @@ import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.value.ValueBuilder;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.library.auth.AuthenticationMethod;
 import org.qi4j.library.auth.AuthorizationContext;
 import org.qi4j.library.auth.AuthorizationContextValue;
@@ -37,7 +38,6 @@ import org.qi4j.library.auth.ProtectedResource;
 import org.qi4j.library.auth.Role;
 import org.qi4j.library.auth.RoleAssignment;
 import org.qi4j.library.auth.User;
-import org.qi4j.test.AbstractQi4jTest;
 import org.qi4j.test.EntityTestAssembler;
 
 public class AuthTest

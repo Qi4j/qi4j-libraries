@@ -36,7 +36,6 @@ import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entity.ManyAssociationState;
 import org.qi4j.spi.entity.association.AssociationType;
-import org.qi4j.spi.entity.association.ManyAssociationType;
 import org.qi4j.spi.property.PropertyType;
 import org.qi4j.spi.property.ValueType;
 
@@ -230,13 +229,13 @@ public class EntityStateSerializer
     private void serializeManyAssociations( final EntityState entityState,
                                             final Graph graph,
                                             final URI entityUri,
-                                            final Iterable<ManyAssociationType> associations,
+                                            final Iterable<AssociationType> associations,
                                             final boolean includeNonQueryable )
     {
         ValueFactory values = graph.getValueFactory();
 
         // Many-Associations
-        for( ManyAssociationType associationType : associations )
+        for( AssociationType associationType : associations )
         {
             if( !( includeNonQueryable || associationType.queryable() ) )
             {

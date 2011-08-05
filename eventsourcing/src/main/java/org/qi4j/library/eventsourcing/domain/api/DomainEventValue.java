@@ -17,6 +17,7 @@
 
 package org.qi4j.library.eventsourcing.domain.api;
 
+import org.qi4j.api.common.Optional;
 import org.qi4j.api.property.Property;
 import org.qi4j.api.value.ValueComposite;
 
@@ -24,7 +25,7 @@ import org.qi4j.api.value.ValueComposite;
  * Representation of a domain-event. An event is triggered by calling a method
  * that is of the form:
  * <p/>
- * @DomainEvent
+ * &#64;DomainEvent
  * void someName(SomeParam param, AnotherParam param2);
  *
  */

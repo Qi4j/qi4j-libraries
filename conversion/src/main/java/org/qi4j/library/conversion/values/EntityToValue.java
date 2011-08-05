@@ -15,7 +15,6 @@ import org.qi4j.spi.Qi4jSPI;
 import org.qi4j.spi.entity.EntityDescriptor;
 import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entity.association.AssociationDescriptor;
-import org.qi4j.spi.entity.association.ManyAssociationDescriptor;
 import org.qi4j.spi.property.PropertyDescriptor;
 import org.qi4j.spi.structure.ModuleSPI;
 import org.qi4j.spi.value.ValueDescriptor;
@@ -122,7 +121,7 @@ public interface EntityToValue
                 EntityReference value = entityState.getAssociation( name );
                 setUnqualifiedProperty( builder, properties, name, value.toURI() );
             }
-            for( ManyAssociationDescriptor descriptor : entityDescriptor.state().manyAssociations() )
+            for( AssociationDescriptor descriptor : entityDescriptor.state().manyAssociations() )
             {
                 ArrayList<String> entityURIs = new ArrayList<String>();
                 QualifiedName name = descriptor.qualifiedName();

@@ -30,10 +30,10 @@ import org.qi4j.api.usecase.UsecaseBuilder;
 import org.qi4j.api.value.ValueBuilder;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entitystore.EntityStore;
 import org.qi4j.spi.entitystore.EntityStoreUnitOfWork;
-import org.qi4j.test.AbstractQi4jTest;
 import org.qi4j.test.EntityTestAssembler;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -71,7 +71,7 @@ public class EntityParserTest
 
         EntityReference entityReference = new EntityReference( "test2" );
         Usecase usecase = UsecaseBuilder.newUsecase( "Test" );
-        EntityStoreUnitOfWork work = entityStore.newUnitOfWork( usecase, moduleInstance );
+        EntityStoreUnitOfWork work = entityStore.newUnitOfWork( usecase, moduleInstance, System.currentTimeMillis() );
         EntityState entityState = work.getEntityState( entityReference );
 
         Iterable<Statement> graph = serializer.serialize( entityState );

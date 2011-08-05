@@ -25,8 +25,8 @@ import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.core.testsupport.AbstractQi4jTest;
 import org.qi4j.library.uid.uuid.assembly.UuidServiceAssembler;
-import org.qi4j.test.AbstractQi4jTest;
 
 public class UuidServiceTest extends AbstractQi4jTest
 {
