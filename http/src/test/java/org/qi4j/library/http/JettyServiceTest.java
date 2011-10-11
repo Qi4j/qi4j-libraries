@@ -31,8 +31,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 
+import static javax.servlet.DispatcherType.REQUEST;
 import static junit.framework.Assert.*;
-import static org.qi4j.library.http.Dispatchers.Dispatcher.REQUEST;
 import static org.qi4j.library.http.Servlets.*;
 
 public final class JettyServiceTest extends AbstractQi4jTest

@@ -14,12 +14,12 @@
 
 package org.qi4j.library.http;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.servlet.Context;
-import org.mortbay.jetty.servlet.DefaultServlet;
-import org.mortbay.jetty.servlet.FilterHolder;
-import org.mortbay.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlet.ServletHolder;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.This;
@@ -27,7 +27,6 @@ import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceDescriptor;
 import org.qi4j.api.service.ServiceReference;
-import org.qi4j.library.http.Dispatchers.Dispatcher;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
@@ -37,8 +36,6 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
-
-import static org.mortbay.jetty.servlet.Context.SESSIONS;
 
 /**
  * JAVADOC
@@ -56,7 +53,7 @@ public class JettyMixin
     private Iterable<ServiceReference<Filter>> filters;
 
     private Server server;
-    private Context root;
+    private ServletContextHandler root;
 
     public JettyMixin( @Uses ServiceDescriptor descriptor, @This Configuration<JettyConfiguration> configuration )
     {
@@ -70,13 +67,13 @@ public class JettyMixin
         server = new Server( port );
 
         // Sets the context root
-        root = new Context( server, "/", SESSIONS );
+        root = new ServletContextHandler( server, "/", true, false );
 
         // Sets the default servlet for default context
         root.addServlet( DefaultServlet.class, "/" );
     }
 
-    private void addServlets( Context root, Iterable<ServiceReference<Servlet>> servlets )
+    private void addServlets( ServletContextHandler root, Iterable<ServiceReference<Servlet>> servlets )
     {
         // Iterate the available servlets and add it to the server
         for( ServiceReference<Servlet> servlet : servlets )
@@ -91,7 +88,7 @@ public class JettyMixin
         }
     }
 
-    private void addFilters( Context root, Iterable<ServiceReference<Filter>> filters )
+    private void addFilters( ServletContextHandler root, Iterable<ServiceReference<Filter>> filters )
     {
         // Iterate the available filters and add it to the server
         for( ServiceReference<Filter> filter : filters )
@@ -102,18 +99,8 @@ public class JettyMixin
             Filter filterInstance = filter.get();
             FilterHolder holder = new FilterHolder( filterInstance );
             holder.setInitParameters( filterInfo.initParameters() );
-            root.addFilter( holder, filterPath, toInt( filterInfo.dispatchers() ) );
+            root.addFilter( holder, filterPath, filterInfo.dispatchers() );
         }
-    }
-
-    private int toInt( Dispatchers dispatches )
-    {
-        int value = 0;
-        for( Dispatcher dispatcher : dispatches )
-        {
-            value |= FilterHolder.dispatch( dispatcher.name().toLowerCase() );
-        }
-        return value;
     }
 
     private String rootResourceBase( String resourcePath )

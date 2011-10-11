@@ -17,6 +17,8 @@
  */
 package org.qi4j.library.http;
 
+import java.util.Collections;
+import java.util.EnumSet;
 import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
@@ -25,6 +27,7 @@ import org.qi4j.library.http.Dispatchers.Dispatcher;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import java.util.Map;
+import javax.servlet.DispatcherType;
 
 import static org.qi4j.api.common.Visibility.layer;
 
@@ -68,9 +71,10 @@ public final class Servlets
 
     public static class ServletDeclaration
     {
+
         String path;
         Class<? extends ServiceComposite> servlet;
-        Map<String, String> initParams;
+        Map<String, String> initParams = Collections.emptyMap();
 
         ServletDeclaration( String path )
         {
@@ -98,6 +102,7 @@ public final class Servlets
         {
             return new ServletInfo( path, initParams );
         }
+
     }
 
     public static FilterAssembler filter( String path )
@@ -131,13 +136,14 @@ public final class Servlets
         }
 
     }
-
+    
     public static class FilterAssembler
     {
+
         String path;
         Class<? extends ServiceComposite> filter;
-        Dispatchers dispatchers;
-        Map<String, String> initParams;
+        EnumSet<DispatcherType> dispatchers;
+        Map<String, String> initParams = Collections.emptyMap();
 
         FilterAssembler( String path )
         {
@@ -145,15 +151,33 @@ public final class Servlets
         }
 
         public <T extends Filter & ServiceComposite> FilterAssembler through(
-            Class<T> filter )
+                Class<T> filter )
         {
             this.filter = filter;
             return this;
         }
 
+        public FilterAssembler on( DispatcherType first, DispatcherType... rest )
+        {
+            dispatchers = EnumSet.of( first, rest );
+            return this;
+        }
+
+        @Deprecated
         public FilterAssembler on( Dispatcher first, Dispatcher... rest )
         {
-            dispatchers = Dispatchers.dispatchers( first, rest );
+            EnumSet<DispatcherType> dispatch = EnumSet.noneOf( DispatcherType.class );
+            for ( Dispatcher each : Dispatchers.dispatchers( first, rest ) ) {
+                switch ( each ) {
+                    case FORWARD:
+                        dispatch.add( DispatcherType.FORWARD );
+                        break;
+                    case REQUEST:
+                        dispatch.add( DispatcherType.REQUEST );
+                        break;
+                }
+            }
+            dispatchers = dispatch;
             return this;
         }
 
@@ -172,6 +196,7 @@ public final class Servlets
         {
             return new FilterInfo( path, initParams, dispatchers );
         }
+
     }
 
 }

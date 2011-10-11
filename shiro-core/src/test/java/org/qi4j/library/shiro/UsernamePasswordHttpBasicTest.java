@@ -28,7 +28,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.jetty.servlet.FilterHolder;
-import org.eclipse.jetty.servlet.FilterMapping;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.junit.Test;
 import org.qi4j.bootstrap.AssemblyException;
@@ -38,6 +37,8 @@ import org.qi4j.library.shiro.tests.username.UsernameTestAssembler;
 import org.qi4j.library.shiro.web.servlet.Qi4jShiroServletFilter;
 
 import java.io.IOException;
+import java.util.EnumSet;
+import javax.servlet.DispatcherType;
 
 import static org.junit.Assert.assertEquals;
 
@@ -69,7 +70,7 @@ public class UsernamePasswordHttpBasicTest
         filterHolder.setInitParameter( Qi4jShiroServletFilter.REALM_MODULE_PARAM, TEST_MODULE );
         filterHolder.setInitParameter( Qi4jShiroServletFilter.FILTER_CHAINS_PARAM, "{\"" + SECURED_SERVLET_PATH + "\":\"authcBasic\"}" );
 
-        sch.addFilter( filterHolder, SECURED_SERVLET_PATH, FilterMapping.DEFAULT );
+        sch.addFilter( filterHolder, SECURED_SERVLET_PATH, EnumSet.of( DispatcherType.REQUEST ) );
     }
 
     @Test
