@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, Rickard Öberg. All Rights Reserved.
+ * Copyright (c) 2011, Paul Merlin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,17 +11,14 @@
  * limitations under the License.
  *
  */
-
 package org.qi4j.library.http;
 
-import javax.servlet.Servlet;
 import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
 
-/**
- * JAVADOC
- */
-@Mixins( WelcomeServlet.class )
-public interface WelcomeServletService extends Servlet, ServiceComposite
+@Mixins( SecureJettyMixin.class )
+interface SecureJettyService
+        extends HttpService, Activatable, ServiceComposite
 {
 }

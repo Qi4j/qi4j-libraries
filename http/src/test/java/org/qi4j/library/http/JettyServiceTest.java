@@ -1,4 +1,6 @@
-/*  Copyright 2008 Edward Yakop.
+/**
+ * Copyright (c) 2008, Edward Yakop. All Rights Reserved.
+ * Copyright (c) 2011, Paul Merlin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,33 +18,35 @@
  */
 package org.qi4j.library.http;
 
-import org.junit.Test;
-import org.qi4j.api.service.ServiceReference;
-import org.qi4j.bootstrap.ApplicationName;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.test.AbstractQi4jTest;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
-
 import static javax.servlet.DispatcherType.REQUEST;
 import static junit.framework.Assert.*;
+import org.junit.Test;
+import org.qi4j.api.service.ServiceReference;
+import org.qi4j.bootstrap.ApplicationName;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import static org.qi4j.library.http.Servlets.*;
+import org.qi4j.test.AbstractQi4jTest;
 
 public final class JettyServiceTest extends AbstractQi4jTest
 {
+    private static final int HTTP_PORT = 8041;
+    
     public final void assemble( ModuleAssembly aModule )
         throws AssemblyException
     {
         new ApplicationName( "Jetty test" ).assemble( aModule );
         aModule.services( MemoryEntityStoreService.class );
         new JettyServiceAssembler().assemble( aModule );
+
+        aModule.forMixin( JettyConfiguration.class).declareDefaults().port().set( HTTP_PORT );
 
         // Hello world servlet related assembly
         addServlets( serve( "/helloWorld" ).with( HelloWorldServletService.class ) ).to( aModule );
@@ -54,7 +58,7 @@ public final class JettyServiceTest extends AbstractQi4jTest
         throws Throwable
     {
         Iterable<ServiceReference<JettyService>> services =
-            module.findServices( JettyService.class );
+            module.serviceFinder().findServices( JettyService.class );
         assertNotNull( services );
 
         Iterator<ServiceReference<JettyService>> iterator = services.iterator();
