@@ -22,7 +22,6 @@ import org.apache.http.client.methods.HttpGet;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
@@ -36,8 +35,7 @@ public class SecureJettyServiceTest
             throws AssemblyException
     {
         module.services( MemoryEntityStoreService.class );
-        module.entities( SecureJettyConfiguration.class ).visibleIn( Visibility.layer );
-        module.services( SecureJettyService.class ).instantiateOnStartup();
+        new SecureJettyServiceAssembler().assemble( module );
 
         SecureJettyConfiguration config = module.forMixin( SecureJettyConfiguration.class ).declareDefaults();
         config.port().set( HTTPS_PORT );

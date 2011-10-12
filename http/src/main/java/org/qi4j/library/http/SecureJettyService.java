@@ -14,11 +14,9 @@
 package org.qi4j.library.http;
 
 import org.qi4j.api.mixin.Mixins;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.api.service.ServiceComposite;
 
 @Mixins( SecureJettyMixin.class )
-interface SecureJettyService
-        extends HttpService, Activatable, ServiceComposite
+public interface SecureJettyService
+        extends JettyService
 {
 }

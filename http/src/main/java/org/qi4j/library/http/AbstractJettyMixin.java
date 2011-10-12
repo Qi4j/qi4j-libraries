@@ -16,6 +16,7 @@ package org.qi4j.library.http;
 import javax.management.MBeanServer;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
@@ -47,9 +48,10 @@ public abstract class AbstractJettyMixin
     private final MBeanServer mBeanServer;
     private Server server;
 
-    public AbstractJettyMixin( String identity, Iterable<ServiceReference<Servlet>> servlets, Iterable<ServiceReference<Filter>> filters, MBeanServer mBeanServer )
+    public AbstractJettyMixin( String identity, Server jettyServer, Iterable<ServiceReference<Servlet>> servlets, Iterable<ServiceReference<Filter>> filters, MBeanServer mBeanServer )
     {
         this.identity = identity;
+        this.server = jettyServer;
         this.servlets = servlets;
         this.filters = filters;
         this.mBeanServer = mBeanServer;
@@ -72,7 +74,7 @@ public abstract class AbstractJettyMixin
     public final void activate()
             throws Exception
     {
-        server = new Server();
+        // server = new Server();
 
         // Prepare ServletContext
         ServletContextHandler root = new ServletContextHandler( server,

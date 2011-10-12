@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2008, Rickard Öberg. All Rights Reserved.
  * Copyright (c) 2011, Paul Merlin. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +13,20 @@
  */
 package org.qi4j.library.http;
 
-import org.qi4j.api.mixin.Mixins;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.api.service.ServiceComposite;
-
-@Mixins( JettyMixin.class )
-public interface JettyService
-        extends HttpService, Activatable, ServiceComposite
+public class SecureJettyServiceAssembler
+        extends JettyServiceAssembler
 {
+
+    @Override
+    protected Class<? extends JettyConfiguration> configurationEntity()
+    {
+        return SecureJettyConfiguration.class;
+    }
+
+    @Override
+    protected Class<? extends JettyService> httpService()
+    {
+        return SecureJettyService.class;
+    }
+
 }

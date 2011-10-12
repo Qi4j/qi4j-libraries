@@ -22,6 +22,7 @@ import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.ConstraintSecurityHandler;
 import org.eclipse.jetty.security.SecurityHandler;
 import org.eclipse.jetty.server.Connector;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ssl.SslConnector;
 import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
 
@@ -45,11 +46,12 @@ public class SecureJettyMixin
     private Iterable<ConstraintService> constraintServices;
 
     public SecureJettyMixin( @This Identity meAsIdentity,
+                             @Service Server jettyServer,
                              @Service Iterable<ServiceReference<Servlet>> servlets,
                              @Service Iterable<ServiceReference<Filter>> filters,
                              @Optional @Service MBeanServer mBeanServer )
     {
-        super( meAsIdentity.identity().get(), servlets, filters, mBeanServer );
+        super( meAsIdentity.identity().get(), jettyServer, servlets, filters, mBeanServer );
     }
 
     @Override

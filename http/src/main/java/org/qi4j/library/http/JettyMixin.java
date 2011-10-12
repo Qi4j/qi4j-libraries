@@ -17,6 +17,7 @@ package org.qi4j.library.http;
 import javax.management.MBeanServer;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import org.eclipse.jetty.server.Server;
 
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.configuration.Configuration;
@@ -34,11 +35,12 @@ public class JettyMixin
     private Configuration<JettyConfiguration> configuration;
 
     public JettyMixin( @This Identity meAsIdentity,
+                       @Service Server jettyServer,
                        @Service Iterable<ServiceReference<Servlet>> servlets,
                        @Service Iterable<ServiceReference<Filter>> filters,
                        @Optional @Service MBeanServer mBeanServer )
     {
-        super( meAsIdentity.identity().get(), servlets, filters, mBeanServer );
+        super( meAsIdentity.identity().get(), jettyServer, servlets, filters, mBeanServer );
     }
 
     @Override
