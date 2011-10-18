@@ -27,7 +27,6 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ErrorHandler;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.server.session.SessionHandler;
-import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHandler;
@@ -83,7 +82,6 @@ public abstract class AbstractJettyMixin
                                                                 buildSecurityHandler(),
                                                                 new ServletHandler(),
                                                                 new ErrorHandler() );
-        root.addServlet( DefaultServlet.class, "/" );
         root.setDisplayName( identity );
         configureContext( root, configuration() );
 

@@ -13,10 +13,6 @@
  */
 package org.qi4j.library.http;
 
-import java.io.File;
-import java.net.URL;
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 import java.security.Provider;
 import java.security.Security;
 
@@ -24,6 +20,7 @@ import org.eclipse.jetty.http.ssl.SslContextFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ssl.SslConnector;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import org.qi4j.api.common.InvalidApplicationException;
@@ -45,15 +42,10 @@ final class JettyConfigurationHelper
 
         // Root resource base
         String resourcePath = config.resourcePath().get();
-        if ( resourcePath == null || resourcePath.length() == 0 ) {
-            ProtectionDomain domain = JettyMixin.class.getProtectionDomain();
-            CodeSource source = domain.getCodeSource();
-            URL location = source.getLocation();
-            String basePath = location.getPath();
-            File base = new File( basePath );
-            resourcePath = base.getAbsolutePath();
+        if ( resourcePath != null && resourcePath.length() > 0 ) {
+            root.addServlet( DefaultServlet.class, "/" );
+            root.setResourceBase( resourcePath );
         }
-        root.setResourceBase( resourcePath );
 
         // Max form content size
         Integer maxFormContentSize = config.maxFormContentSize().get();
