@@ -24,30 +24,24 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManagerFactory;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import org.apache.http.util.EntityUtils;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import org.qi4j.test.AbstractQi4jTest;
-
 /**
  * Base class for SecureJettyMixin tests.
- * 
+ *
  * Use HttpClient in order to easily use different {@link SSLContext}s between server and client.
  */
 public abstract class AbstractSecureJettyTest
-        extends AbstractQi4jTest
+        extends AbstractJettyTest
 {
 
     protected static final int HTTPS_PORT = 8441;
@@ -55,28 +49,14 @@ public abstract class AbstractSecureJettyTest
     private static final String HTTPS = "https";
     private static final File KEYSTORE_FILE = new File( "src/test/resources/org/qi4j/library/http/qi4j-lib-http-unittests-client-cert.p12" );
     private static final File TRUSTSTORE_FILE = new File( "src/test/resources/org/qi4j/library/http/qi4j-lib-http-unittests-ca.jceks" );
-    // These three clients use a HostnameVerifier that don't do any check, don't do this in production code
-    protected HttpClient defaultHttpClient;
+    // These two clients use a HostnameVerifier that don't do any check, don't do this in production code
     protected HttpClient trustHttpClient;
     protected HttpClient mutualHttpClient;
-    protected ResponseHandler<String> stringResponseHandler = new ResponseHandler<String>()
-    {
-
-        public String handleResponse( HttpResponse hr )
-                throws ClientProtocolException, IOException
-        {
-            return EntityUtils.toString( hr.getEntity(), "UTF-8" );
-        }
-
-    };
 
     @Before
-    public void before()
+    public void beforeSecure()
             throws GeneralSecurityException, IOException
     {
-        // Default HTTP Client
-        defaultHttpClient = new DefaultHttpClient();
-
         // Trust HTTP Client
         KeyStore truststore = KeyStore.getInstance( "JCEKS" );
         truststore.load( new FileInputStream( TRUSTSTORE_FILE ), KS_PASSWORD.toCharArray() );
@@ -108,7 +88,7 @@ public abstract class AbstractSecureJettyTest
     private static javax.net.ssl.SSLSocketFactory defaultSSLSocketFactory;
 
     @BeforeClass
-    public static void beforeClass()
+    public static void beforeSecureClass()
             throws IOException, GeneralSecurityException
     {
         defaultHostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
@@ -132,7 +112,7 @@ public abstract class AbstractSecureJettyTest
     }
 
     @AfterClass
-    public static void afterClass()
+    public static void afterSecureClass()
     {
         HttpsURLConnection.setDefaultHostnameVerifier( defaultHostnameVerifier );
         HttpsURLConnection.setDefaultSSLSocketFactory( defaultSSLSocketFactory );
